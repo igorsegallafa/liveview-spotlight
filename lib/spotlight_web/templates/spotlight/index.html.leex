@@ -1,0 +1,28 @@
+<div id="spotlight" phx-window-keydown="next_result" style="display: flex">
+    <div id="content">
+        <form phx-change="search" phx-submit="select" class="search">
+            <i class="icon bi bi-search"></i>
+            <label for="search" hidden>Search</label>
+            <input type="text" id="search" class="search-input">
+            <i class="result-icon bi bi-file-earmark-fill"></i>
+        </form>
+        <%= unless Enum.empty?(@results) do %>
+        <div class="container">
+            <div class="sidenav">
+                <select class="results" size="24" aria-label="results a">
+                    <%= for {label, items} <- @results do %>
+                    <option class="result-header" disabled><%= label %></option>
+                        <%= for item <- items do %>
+                        <option class="bi bi-file-earmark-fill" value="1">&nbsp;<%= item %></option>
+                        <% end %>
+                    <% end %>
+                </select>
+            </div>
+            <div class="details">
+                <h4 class="details-header"></h4>
+                <div class="details-content"></div>
+            </div>
+        </div>
+        <% end %>
+    </div>
+</div>
