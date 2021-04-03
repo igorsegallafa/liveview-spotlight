@@ -3,7 +3,7 @@
         <form phx-change="search" phx-submit="select" class="search">
             <i class="icon bi bi-search"></i>
             <label for="search" hidden>Search</label>
-            <input type="text" id="search" class="search-input">
+            <input type="text" id="search" class="search-input" autocomplete="off">
             <i class="result-icon bi bi-file-earmark-fill"></i>
         </form>
         <%= unless Enum.empty?(@results) do %>
