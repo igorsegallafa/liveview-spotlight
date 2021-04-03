@@ -1,4 +1,4 @@
-<div id="spotlight" phx-window-keydown="next_result" style="display: flex">
+<div id="spotlight" style="display: flex">
     <div id="content">
         <form phx-change="search" phx-submit="select" class="search">
             <i class="icon bi bi-search"></i>
@@ -6,21 +6,24 @@
             <input type="text" id="search" class="search-input" autocomplete="off">
             <i class="result-icon bi bi-file-earmark-fill"></i>
         </form>
-        <%= unless Enum.empty?(@results) do %>
+        <%= unless Enum.empty?(@items) do %>
         <div class="container">
             <div class="sidenav">
-                <select class="results" size="24" aria-label="results a">
-                    <%= for {label, items} <- @results do %>
+                <select phx-focus="select_item" class="results" size="24" aria-label="results a">
+                    <%= for {label, items} <- group_items_by_first_letter(@items) do %>
                     <option class="result-header" disabled><%= label %></option>
                         <%= for item <- items do %>
-                        <option class="bi bi-file-earmark-fill" value="1">&nbsp;<%= item %></option>
+                        <option class="bi bi-file-earmark-fill" value="<%= item["id"] %>" <%= if @selected_item_id == item["id"], do: "selected" %>>
+                            <%= item["name"] %>
+                        </option>
                         <% end %>
                     <% end %>
                 </select>
             </div>
             <div class="details">
-                <h4 class="details-header"></h4>
-                <div class="details-content"></div>
+                <% selected_item = get_selected_item(@items, @selected_item_id) %>
+                <h4 class="details-header"><%= selected_item["name"] %></h4>
+                <div class="details-content"><%= selected_item["description"] %></div>
             </div>
         </div>
         <% end %>
