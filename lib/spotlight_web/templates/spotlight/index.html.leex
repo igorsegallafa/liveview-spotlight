@@ -1,13 +1,12 @@
 <div id="spotlight" style="display: flex">
-    <div id="content">
+    <div id="spotlight-main" class="<%= if Enum.empty?(@items), do: "offset" %>">
         <form phx-change="search" phx-submit="select" class="search">
             <i class="icon bi bi-search"></i>
             <label for="search" hidden>Search</label>
-            <input type="text" id="search" class="search-input" autocomplete="off">
-            <i class="result-icon <%= Map.get(@selected_item, "icon", "bi bi-file-earmark-fill") %>"></i>
+            <input name="query" type="text" id="search" class="search-input" autocomplete="off">
+            <i class="result-icon <%= unless Enum.empty?(@selected_item), do: Map.get(@selected_item, "icon", "bi bi-file-earmark-fill") %>"></i>
         </form>
-        <%= unless Enum.empty?(@items) do %>
-        <div class="container">
+        <div class="container <%= if Enum.empty?(@items), do: "display-none" %>">
             <div class="sidenav">
                 <select phx-focus="select_item" class="results" size="14" aria-label="results a">
                     <%= for {label, items} <- group_items_by_first_letter(@items) do %>
@@ -25,6 +24,5 @@
                 <div class="details-content"><%= @selected_item["description"] %></div>
             </div>
         </div>
-        <% end %>
     </div>
 </div>

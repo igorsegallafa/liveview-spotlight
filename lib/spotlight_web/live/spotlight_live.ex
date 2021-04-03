@@ -1,7 +1,7 @@
 defmodule SpotlightWeb.SpotlightLive do
   use SpotlightWeb, :live_view
 
-  @items [
+  @items_sample [
     %{
       "name" => "Testing",
       "url" => "https://www.google.com.br/",
@@ -21,18 +21,23 @@ defmodule SpotlightWeb.SpotlightLive do
   ]
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, items: format_item_id_and_sort_list(@items), selected_item: %{})}
+    {:ok, assign(socket, items: [], selected_item: %{})}
   end
 
   def render(assigns) do
     render(SpotlightWeb.SpotlightView, "index.html", assigns)
   end
 
-  def handle_event("search", _params, socket) do
-    {:noreply, socket}
+  def handle_event("search", _params = %{"query" => query}, socket) do
+    result =
+      query
+      |> query_from_result_set()
+      |> prepare_items_result()
+
+    {:noreply, assign(socket, items: result)}
   end
 
-  def handle_event("select", params, socket) do
+  def handle_event("select", _params, socket) do
     selected_item = socket.assigns.selected_item
 
     {:noreply, socket |> redirect(external: selected_item["url"])}
@@ -45,7 +50,13 @@ defmodule SpotlightWeb.SpotlightLive do
     {:noreply, assign(socket, selected_item: selected_item)}
   end
 
-  defp format_item_id_and_sort_list(items) do
+  defp query_from_result_set(_query = ""), do: []
+  defp query_from_result_set(query) do
+    @items_sample
+    |> Enum.filter(fn item -> String.contains?(String.downcase(item["name"]), String.downcase(query)) end)
+  end
+
+  defp prepare_items_result(items) do
     items
     |> Enum.sort_by(&(&1["name"]))
     |> Enum.with_index
