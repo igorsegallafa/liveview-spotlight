@@ -34,6 +34,15 @@
     border-bottom: 1px solid #ccc;
 }
 
+#spotlight #search-box {
+    cursor: pointer;
+}
+
+#spotlight #search-input-description {
+    font-size: 14px;
+    white-space: nowrap;
+}
+
 #spotlight .search .icon {
     font-size: 24px;
     margin-left: 5px;
@@ -51,7 +60,6 @@
 #spotlight .search-input {
     margin-left: 5px;
     height: 100%;
-    width: 80%;
     padding: 0;
     background-color: rgba(0,0,0,0);
     border: 0;

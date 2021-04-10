@@ -1,10 +1,12 @@
+<style>.search-input-width{}</style>
 <div id="spotlight" style="display: flex">
     <div id="spotlight-main" class="<%= if Enum.empty?(@items), do: "offset" %>">
-        <form phx-change="search" phx-submit="select" class="search">
+        <form phx-change="search" phx-submit="select" id="search-box" class="search">
             <i class="icon bi bi-search"></i>
-            <label for="search" hidden>Search</label>
-            <input name="query" type="text" id="search" class="search-input" autocomplete="off">
-            <i class="result-icon <%= if !Enum.empty?(@selected_item) && Enum.count(@items) > 0, do: Map.get(@selected_item, "icon", "bi bi-file-earmark-fill") %>"></i>
+            <label for="search-input" hidden>Search</label>
+            <input name="query" type="text" id="search-input" class="search-input search-input-width" autocomplete="off">
+            <span id="search-input-description"><%= if is_selected_item_available?(@items, @selected_item), do: get_selected_item_search_description(@selected_item) %></span>
+            <i class="result-icon <%= if is_selected_item_available?(@items, @selected_item), do: Map.get(@selected_item, "icon", "bi bi-file-earmark-fill") %>"></i>
         </form>
         <div class="container <%= if Enum.empty?(@items), do: "display-none" %>">
             <div class="sidenav">

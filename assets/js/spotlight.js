@@ -1,12 +1,56 @@
 window.onload = function() {
     let spotlight = document.getElementById('spotlight');
     let spotlight_results = document.querySelector('#spotlight .results');
+    let spotlight_search_box = document.getElementById('search-box');
+    let spotlight_search_input = document.getElementById('search-input');
 
     spotlight.addEventListener('keydown', handleKeyDown, false);
     spotlight_results.addEventListener('mousedown', handleSelectOption, false );
     spotlight_results.addEventListener('keyup', function(event){ event.preventDefault(); } );
     spotlight_results.addEventListener('keydown', function(event){ event.preventDefault(); } );
     spotlight_results.addEventListener('keypress', function(event){ event.preventDefault(); } );
+    spotlight_search_box.addEventListener('mousedown', handleSearchBoxSelect);
+    spotlight_search_input.addEventListener('input', handleSearchInput);
+
+    handleSearchInput.call(spotlight_search_input);
+}
+
+let changeStyle = function(findSelector, newDeclarations) {
+    // Source: https://stackoverflow.com/a/47772004
+    Array.from(document.styleSheets).forEach((sheet) => {
+        if (sheet.href) return;
+        const cssRulesList = Array.from(sheet.cssRules);
+        cssRulesList.forEach((styleRule) => {
+            if (styleRule.selectorText === findSelector) {
+                Object.keys(newDeclarations).forEach((cssProp) => {
+                    styleRule.style[cssProp] = newDeclarations[cssProp];
+                });
+            }
+        });
+    });
+}
+
+let handleSearchBoxSelect = function(event) {
+    let spotlight_search_input = document.getElementById('search-input');
+
+    if(document.activeElement !== spotlight_search_input)
+    {
+        spotlight_search_input.focus();
+        event.preventDefault();
+    }
+}
+
+let handleSearchInput = function() {
+    let inputLength = this.value.length;
+
+    //Clamp input length value
+    if(inputLength === 0)
+        inputLength = 1;
+    else if(inputLength > 40)
+        inputLength = 40;
+
+    //Set input width style
+    changeStyle('.search-input-width', {'width': inputLength  + 'ch'});
 }
 
 let handleKeyDown = function(event) {
