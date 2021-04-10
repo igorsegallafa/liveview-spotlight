@@ -4,7 +4,7 @@
             <i class="icon bi bi-search"></i>
             <label for="search" hidden>Search</label>
             <input name="query" type="text" id="search" class="search-input" autocomplete="off">
-            <i class="result-icon <%= unless Enum.empty?(@selected_item), do: Map.get(@selected_item, "icon", "bi bi-file-earmark-fill") %>"></i>
+            <i class="result-icon <%= if !Enum.empty?(@selected_item) && Enum.count(@items) > 0, do: Map.get(@selected_item, "icon", "bi bi-file-earmark-fill") %>"></i>
         </form>
         <div class="container <%= if Enum.empty?(@items), do: "display-none" %>">
             <div class="sidenav">
