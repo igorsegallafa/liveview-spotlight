@@ -34,11 +34,25 @@
     border-bottom: 1px solid #ccc;
 }
 
+#spotlight .search-input-searching {
+    display: none;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+#spotlight #search-box.phx-change-loading .search-input-description{
+    display: none;
+}
+
+#spotlight #search-box.phx-change-loading .search-input-searching{
+    display: inline;
+}
+
 #spotlight #search-box {
     cursor: pointer;
 }
 
-#spotlight #search-input-description {
+#spotlight .search-input-description {
     font-size: 14px;
     white-space: nowrap;
 }
