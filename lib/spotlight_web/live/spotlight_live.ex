@@ -17,6 +17,7 @@ defmodule SpotlightWeb.SpotlightLive do
       "url" => "https://www.google.com.br/",
       "description" => "Testing description 3",
       "icon" => "bi-github",
+      "template" => "custom_template.html"
     },
   ]
 
@@ -25,7 +26,7 @@ defmodule SpotlightWeb.SpotlightLive do
   end
 
   def render(assigns) do
-    render(SpotlightWeb.SpotlightView, "index.html", assigns)
+    render(SpotlightWeb.SpotlightView, "spotlight.html", assigns)
   end
 
   def handle_event("search", _params = %{"query" => query}, socket) do

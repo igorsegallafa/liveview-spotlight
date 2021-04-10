@@ -22,8 +22,12 @@
                 </select>
             </div>
             <div class="details">
+                <%= if Map.get(@selected_item, "template") do %>
+                <%= render SpotlightWeb.SpotlightView, Map.get(@selected_item, "template"), assigns %>
+                <% else %>
                 <h4 class="details-header"><%= @selected_item["name"] %></h4>
                 <div class="details-content"><%= @selected_item["description"] %></div>
+                <% end %>
             </div>
         </div>
     </div>
